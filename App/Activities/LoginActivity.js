@@ -1,15 +1,15 @@
 import React from 'react';
-import { TextInput, View, StyleSheet, Text } from 'react-native';
+import { TextInput, View, StyleSheet } from 'react-native';
 import { Icon, Button, Card } from 'react-native-elements';
 import { auth } from '../utils/firebase';
 
-export default class SignUpActivity extends React.Component {
+export class SignUpActivity extends React.Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      email: '',
-      password: '',
+      email:'', 
+      password='', 
       errorMessage: null
     };
   }
@@ -18,25 +18,19 @@ export default class SignUpActivity extends React.Component {
     title: "Sign Up Page",
     drawerLabel: "Login",
     drawerIcon:
-      <Icon name="login"
-        type="entypo" />,
+          <Icon name="login"
+          type="entypo"/>,
     headerStyle: {
 
     }
   }
 
 
-  handleSignUp = async () => {
-    try {
-      await auth.createUserWithEmailAndPassword(this.state.email, this.state.password)
-      this.props.navigation.navigate('MainActivity')
-    } catch (error) {
+  handleSignUp = () => {
+    auth.createUserWithEmailAndPassword(this.state.email, this.state.password).catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;
-      this.setState({
-        errorMessage: error.message
-      })
-    }
+    }); 
   }
 
   render() {

@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
+import SignUpActivity from './Activities/SignUpActivity';
+import MainActivity from './Activities/MainActivity';
 
 class HomeScreen extends React.Component {
   render() {
@@ -13,7 +15,10 @@ class HomeScreen extends React.Component {
 }
 
 export default createStackNavigator({
-  Home: {
-    screen: HomeScreen
+  SignUp: {
+    screen: SignUpActivity
   },
+  MainActivity: {
+    screen: MainActivity
+  }
 });
