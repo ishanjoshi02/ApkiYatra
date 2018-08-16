@@ -29,7 +29,7 @@ export default class SignUpActivity extends React.Component {
   handleSignUp = async () => {
     try {
       await auth.createUserWithEmailAndPassword(this.state.email, this.state.password)
-      this.props.navigation.navigate('MainActivity')
+      this.props.navigation.navigate('Main')
     } catch (error) {
       var errorCode = error.code;
       var errorMessage = error.message;
@@ -65,7 +65,7 @@ export default class SignUpActivity extends React.Component {
         <Button title="Sign Up" onPress={this.handleSignUp} />
         <Button
           title="Already have an account? Login"
-          onPress={() => this.props.navigation.navigate('Login')}
+          onPress={() => {this.props.navigation.navigate('Login')}}
         />
       </View>
     )

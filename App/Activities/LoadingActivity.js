@@ -1,21 +1,20 @@
 import React from 'react'
-import { View, Text, ActivityIndicator, StyleSheet } from 'react-native'
+import { auth } from '../utils/firebase'
+import Spinner from 'react-native-loading-spinner-overlay'
 
-export default class Loading extends React.Component {
+export default class LoadingActivity extends React.Component {
+
+  componentDidMount() {
+      auth.onAuthStateChanged(user => {
+        console.log("User \n", user)
+        this.props.navigation.navigate(user ? 'Main' : 'Signup')
+      })
+  }
+
   render() {
-    return (
-      <View style={styles.container}>
-        <Text>Loading</Text>
-        <ActivityIndicator size="large" />
-      </View>
+    return(
+      <Spinner animation='slide' size='large' textContent='Loading...'></Spinner>
     )
   }
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  }
-})
+}

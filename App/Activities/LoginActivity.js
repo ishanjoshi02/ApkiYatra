@@ -1,42 +1,48 @@
 import React from 'react';
-import { TextInput, View, StyleSheet } from 'react-native';
+import { TextInput, View, StyleSheet, Text } from 'react-native';
 import { Icon, Button, Card } from 'react-native-elements';
 import { auth } from '../utils/firebase';
 
-export class SignUpActivity extends React.Component {
+export default class LoginActivity extends React.Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      email:'', 
-      password='', 
+      email: '',
+      password: '',
       errorMessage: null
     };
   }
 
   static navigationOptions = {
-    title: "Sign Up Page",
+    title: "Log In Page",
     drawerLabel: "Login",
     drawerIcon:
-          <Icon name="login"
-          type="entypo"/>,
+      <Icon name="login"
+        type="entypo" />,
     headerStyle: {
 
     }
   }
 
 
-  handleSignUp = () => {
-    auth.createUserWithEmailAndPassword(this.state.email, this.state.password).catch(function(error) {
+  handleLogIn = async () => {
+    try {
+      await auth.signInWithEmailAndPassword(this.state.email, this.state.password)
+      this.props.navigation.navigate('Main')
+    } catch (error) {
       var errorCode = error.code;
       var errorMessage = error.message;
-    }); 
+      this.setState({
+        errorMessage: error.message
+      })
+    }
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text>Sign Up</Text>
+        <Text>Log In</Text>
         {this.state.errorMessage &&
           <Text style={{ color: 'red' }}>
             {this.state.errorMessage}
@@ -56,11 +62,8 @@ export class SignUpActivity extends React.Component {
           onChangeText={password => this.setState({ password })}
           value={this.state.password}
         />
-        <Button title="Sign Up" onPress={this.handleSignUp} />
-        <Button
-          title="Already have an account? Login"
-          onPress={() => this.props.navigation.navigate('Login')}
-        />
+        <Button title="Log In" onPress={this.handleLogIn} />
+        
       </View>
     )
   }
