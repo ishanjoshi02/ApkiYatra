@@ -26,6 +26,8 @@
     "react-native-elements": "^0.19.1",
     "react-native-loading-spinner-overlay": "^0.5.2",
     "react-native-maps": "^0.21.0",
+    "react-native-options-menu": "^2.0.0",
+    "react-native-pop-menu": "0.0.9",
     "react-navigation": "^2.11.2"
   }
 }

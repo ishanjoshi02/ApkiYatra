@@ -5840,6 +5840,16 @@ react-native-maps@0.21.0, react-native-maps@^0.21.0:
     babel-plugin-module-resolver "^2.3.0"
     babel-preset-react-native "1.9.0"
 
+react-native-options-menu@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-options-menu/-/react-native-options-menu-2.0.0.tgz#0c6e4340256451f9e2b56194ab48a3cf66547696"
+
+react-native-pop-menu@0.0.9:
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/react-native-pop-menu/-/react-native-pop-menu-0.0.9.tgz#ef774fafabd22f271ecf1f371d966f91c2c6f464"
+  dependencies:
+    prop-types "^15.6.0"
+
 react-native-safe-area-view@^0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/react-native-safe-area-view/-/react-native-safe-area-view-0.7.0.tgz#38f5ab9368d6ef9e5d18ab64212938af3ec39421"
