@@ -1,9 +1,10 @@
 import React from 'react'
-import { WebView, Text } from 'react-native';
+import { WebView, Text, View } from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation';
 // import MapsActivity from './MapsActivity'
 // import BlankActivity1 from './BlankActivity1'
 import { Header, Icon } from 'react-native-elements'
+import { MapView } from "expo";
 
 import { auth } from '../utils/firebase'
 
@@ -23,56 +24,17 @@ export default class MainActivity extends React.Component {
             }
     render() {
         return(
-            <WebView
-                source={Trial}
-            />
-            // <Text>fespfe</Text>
+            <MapView 
+                style={{ flex: 1, }}
+                initialRegion={{
+                    latitude: 37.78825,
+                    longitude: -122.4324,
+                    latitudeDelta: 0.0922,
+                    longitudeDelta: 0.0421,
+                }}
+                onMapReady	={ e => console.log('ready')}
+            >
+            </MapView>
         )
     }
 }
-
-
-
-// const TabNavigator = createBottomTabNavigator({
-//     Maps: {
-//         screen: MapsActivity,
-//     },
-//     BlankActivity1: {
-//         screen: BlankActivity1,
-        
-//     }
-// })
-
-
-// export default class MainActivity extends React.Component {
-
-//     static navigationOptions = {
-//         headerLeft: null,
-//         header:
-//             <Header
-//                 placement='left'
-//                 backgroundColor="#008080"
-//                 statusBarProps={{ barStyle: 'dark-content', animated: true }}
-//                 centerComponent={{ text: 'ApkiYatra', style: { color: '#fff' } }}
-//                 rightComponent={<Icon name='dots-three-vertical' type='entypo' onPress={() => console.log("Settings press")}/>}
-//             />
-//     }
-
-//     constructor(props) {
-//         super(props)
-//         this.state = {
-//             currentUser: null,
-//         }
-//     }
-
-//     componentDidMount() {
-//         const { currentUser } = auth.currentUser
-//         this.setState({currentUser})
-//     }
-
-//     render() {
-//         return (
-//             <TabNavigator/>
-//         )
-//     }
-// }

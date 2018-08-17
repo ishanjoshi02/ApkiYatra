@@ -1,5 +1,13 @@
 {
   "expo": {
-    "sdkVersion": "27.0.0"
+    "sdkVersion": "27.0.0",
+    "android": {
+      "package": "com.foobar.apkiyatra",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyCfLbyBRSOQX6RQrwyYc0KX9bRCfVtbgXw"
+        }
+      }
+    }
   }
 }
