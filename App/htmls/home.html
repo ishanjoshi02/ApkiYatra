@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Place Autocomplete</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <link href="design/animate.css" rel="stylesheet">
+    <script src="js/jquery.min.js"></script>
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        overflow: hidden;
+      }
+      @font-face {
+        font-family: content;
+        src:url(./assets/fonts/content.ttf);
+      }
+      #map {
+        height: 100%;
+        width: 100%;
+      }
+      .controls {
+        
+        border: 0.5vw solid transparent;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      }
+
+      #origin-input,
+      #destination-input {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 5vw;
+        font-weight: 300;
+        margin-left: 3vw;
+       
+        text-overflow: ellipsis;
+        width: 85%;
+        display: block;
+      }
+
+       #origin-input
+       {
+        position: absolute;
+        top:3%;
+        left:50%;
+        -webkit-transform: translate(-50%,-50%);
+       }      
+
+       #destination-input {
+         position: absolute;
+        top:13%;
+        left:50%;
+        -webkit-transform: translate(-50%,-50%);
+       }
+
+      #origin-input:focus,
+      #destination-input:focus {
+        border-color: #4d90fe;
+      }
+
+      #mode-selector {
+        color: #fff;
+        background-color: #4d90fe;
+        margin-left: 12px;
+        padding: 5px 11px 0px 11px;
+        position: absolute;
+        bottom:3%;
+        left:50%;
+        transform: translate(-50%,-50%);
+        width: 70%;
+      }
+
+      #mode-selector label {
+        font-family: Roboto;
+        font-size: 4vw;
+        font-weight: 300;
+      }
+
+      #go{
+        position: absolute;
+        bottom: 25%;
+        right: 5%;
+        height: 10%;
+        display: none;
+      }
+
+      #loadingScreen{
+        height: 100%;
+        width: 100%;
+        background-color: #161616;
+        display: none;
+      }
+
+      #loadingScreen img{
+        position: absolute;
+        top:50%;
+        left:50%;
+        transform: translate(-50%,-50%);
+      }
+
+      .cards{
+        position: absolute;
+        left:50%;
+        width: 95%;
+        height: 10%;
+        transform: translate(-50%,-50%);
+        background-color: #FF5B55;
+        display: block;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      }
+
+      #carCard1{
+        top:7%;
+        animation-delay: 0.2s;
+      }
+
+      #carCard2{
+        top:19%;
+        animation-delay: 0.5s;
+      }
+
+      #carCard3{
+        top:31%;
+        animation-delay: 0.5s;
+      }
+
+      #cardScreen,#map-canvas{
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top:0%;
+        left:0%;
+        background-color: #161616;
+        display: none;
+      }
+
+      #modes{
+        position: absolute;
+        top: 50%;
+        left:10%;
+        transform: translate(-50%,-50%);
+        width: 8%;
+
+      }
+      #modeName{
+        position: absolute;
+        top: 50%;
+        left:20%;
+        transform: translate(0%,-50%);
+        font-size: 5vw;
+        font-family: content;
+      }
+      #timeTake{
+        right: 5%;
+        position: absolute;
+        top: 50%;
+        
+        transform: translate(0%,-50%);
+        font-size: 5vw;
+        font-family: content;
+      }
+       #moneyTake{
+        right: 25%;
+        position: absolute;
+        top: 50%;
+        
+        transform: translate(0%,-50%);
+        font-size: 5vw;
+        font-family: content;
+      }
+      #park{
+        position: absolute;
+        bottom: 5%;
+        left:50%;
+        transform: translate(-50%,-50%);
+        width: 20%;
+      }
+
+      #googleMap1{
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top:0%;
+        left:0;
+      }
+    </style>
+
+    <script type="text/javascript">
+      setTimeout(function(){
+        document.getElementById('go').style.display = "block";
+      document.getElementById('go').className = "animated bounceInRight";
+    },4000);
+
+      function showCards(){
+        var a = document.getElementsByClassName('grab');
+        for(var i =0;i<a.length;i++)
+        {
+          a.item(i).style.display = "none";  
+        }
+        document.getElementById("go").style.display = "none";
+        document.getElementById("loadingScreen").style.display = "block";
+
+        var temp_or = document.getElementById("origin-input").value;
+        var temp_de = document.getElementById("destination-input").value;
+
+        for(var i=0;i<temp_or.length;i++)
+        {
+          if(temp_or[i]!=',')
+            localStorage.source+=temp_or[i];
+          else
+            break;
+        }
+
+        for(var i=0;i<temp_de.length;i++)
+        {
+          if(temp_de[i]!=',')
+            localStorage.dest+=temp_de[i];
+          else
+            break;
+        }
+        console.log(localStorage.source);
+        (function(){
+            var dataString = "";
+              $.ajax({
+                    type: "GET",
+                    url: "http://10.131.126.24:8001/?data=YS",
+                    data: dataString,
+                    cache: false,
+                    success: function(data) {
+                      disData(data);
+                    },
+                    error: function(data)
+                    {
+                      noti(4);
+                    }
+                });
+        })();
+
+
+
+
+
+
+        setTimeout(function(){
+          document.getElementById("loadingScreen").style.display = "none";
+        loadCards();
+    },3000);
+        
+      }
+
+
+      function loadCards() {
+        document.getElementById("cardScreen").style.display = "block";
+        var a = document.getElementsByClassName("cards");
+        for(var i =0;i<a.length;i++)
+        {
+          a.item(i).className = "cards animated fadeIn";  
+        }
+
+      }
+
+
+      function displayRoute(){
+        document.getElementById("map-canvas").style.display = "block";
+        document.getElementById("cardScreen").style.display = "none";
+
+        document.getElementById("map-canvas").innerHTML='<object type="text/html" data="route1.html" id="googleMap1" ></object>';
+        
+      }
+
+       function displayRoute1(){
+        document.getElementById("map-canvas").style.display = "block";
+        document.getElementById("cardScreen").style.display = "none";
+
+        document.getElementById("map-canvas").innerHTML='<object type="text/html" data="route2.html" id="googleMap1" ></object>';
+        
+      }
+
+       function displayRoute2(){
+        document.getElementById("map-canvas").style.display = "block";
+        document.getElementById("cardScreen").style.display = "none";
+
+        document.getElementById("map-canvas").innerHTML='<object type="text/html" data="route3.html" id="googleMap1" ></object>';
+        
+      }
+
+
+function disData(data){
+
+  var a = document.getElementsByClassName("timeTake");
+  var b = document.getElementsByClassName("moneyTake");
+        for(var i =0;i<a.length;i++)
+        {
+          a.item(i).innerHTML = data.time[i]+" min";
+           b.item(i).innerHTML = "Rs. "+ data.cost[i] + " | ";  
+        }
+
+}
+
+
+/*
+
+function getData(){
+
+      var settings = {
+          "async": true,
+          "crossDomain": true,
+          "url": "http://10.131.126.19/car",
+          "method": "GET",
+          "headers": {
+            "starting_point": "Yeravada",
+            "destination": "Camp",
+            "cache-control": "no-cache",
+          }
+        }
+
+
+        $.ajax(settings).done(function (response) {
+          var t_o_time = response.time.time; //time op time
+          var t_o_dis = response.time.distance; //time op dis
+          var d_o_time = response.distance.time; //dis op time
+          var d_o_dis = response.distance.time;
+
+          var start_add = response.data.routes[0][0].start_address;
+          var end_add = response.data.routes[0][response.data.routes[0].length].end_address;
+
+          for(var i = 0; i<response.time.route[].length;i++)
+          {
+            if(response.time.route[i]=="walk")
+            {
+                var drive_till = res.data.routes[0][i-1].end_address;
+                var walk_from = res.data.routes[0][i].start_address;
+            }
+
+            else(){
+
+            }
+          }
+          
+
+          
+        });
+
+
+
+}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+  </head>
+  <body>
+    <div id="map" class="grab"></div>
+ <input id="origin-input" class="controls grab" type="text"
+        placeholder="Enter an origin location" >
+
+    <input id="destination-input" class="controls grab" type="text"
+        placeholder="Enter a destination location">
+
+    <div id="mode-selector" class="controls grab">
+      <input type="radio" name="type" id="changemode-walking" checked="checked">
+      <label for="changemode-walking">Walking</label>
+
+      <input type="radio" name="type" id="changemode-transit">
+      <label for="changemode-transit">Transit</label>
+
+      <input type="radio" name="type" id="changemode-driving">
+      <label for="changemode-driving">Driving</label>
+    </div>
+
+    <div id="go" onclick="showCards()" class="grab">
+      <img src="assets/images/go.png" height="100%" width="auto" />
+    </div>
+
+     <div id="loadingScreen" class="loadingScreen" align="center">
+        <img src="assets/images/loader.gif" height="auto" width="100%" />
+    </div>
+
+    <div id="cardScreen" class="cardScreen">
+      <div id="carCard1" class="cards" onclick="displayRoute()">
+        <div id="modes" class="modes">
+          <img src="assets/images/parking.png" height="auto" width="100%" />
+        </div>
+
+        <div id="modeName">
+            ROUTE 1
+        </div>
+        <div id="timeTake" class="timeTake">
+          25 min
+        </div>
+        <div id="moneyTake" class="moneyTake">
+          25 min
+        </div>
+      </div>
+      <div id="carCard2" class="cards" onclick="displayRoute1()">
+      <div id="modes" class="modes">
+          <img src="assets/images/parking.png" height="auto" width="100%" />
+        </div>
+        <div id="modeName">
+           ROUTE 2
+        </div>
+        <div id="timeTake" class="timeTake">
+          43 min
+        </div>
+        <div id="moneyTake" class="moneyTake">
+          43 min
+        </div>
+      </div>
+
+      <div id="carCard3" class="cards" onclick="displayRoute2()">
+        <div id="modes" class="modes">
+          <img src="assets/images/parking.png" height="auto" width="100%" />
+        </div>
+
+        <div id="modeName">
+             ROUTE 3
+        </div>
+        <div id="timeTake" class="timeTake">
+          25 min
+        </div>
+          <div id="moneyTake" class="moneyTake">
+          25 min
+        </div>
+      </div>
+
+
+      <div id="park">
+        <img src="assets/images/park.png" height="auto" width="100%" />
+      </div>
+    </div>
+
+    <div id="map-canvas" class="mapScreen">
+
+    </div>
+
+
+    <script>
+      // This example requires the Places library. Include the libraries=places
+      // parameter when you first load the API. For example:
+      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+
+      function initMap() {
+        var origin_place_id = null;
+        var destination_place_id = null;
+        var travel_mode = google.maps.TravelMode.WALKING;
+        var map = new google.maps.Map(document.getElementById('map'), {
+          mapTypeControl: false,
+          center: {lat: 18.5529, lng: 73.8796},
+          zoom: 13
+        });
+        var directionsService = new google.maps.DirectionsService;
+        var directionsDisplay = new google.maps.DirectionsRenderer;
+        directionsDisplay.setMap(map);
+
+        var origin_input = document.getElementById('origin-input');
+        var destination_input = document.getElementById('destination-input');
+        var modes = document.getElementById('mode-selector');
+
+        //map.controls[google.maps.ControlPosition.TOP_LEFT].push(origin_input);
+        //map.controls[google.maps.ControlPosition.TOP_LEFT].push(destination_input);
+        // map.controls[google.maps.ControlPosition.BOTTOM_RIGHT].push(modes);
+
+        var origin_autocomplete = new google.maps.places.Autocomplete(origin_input);
+        origin_autocomplete.bindTo('bounds', map);
+        var destination_autocomplete =
+            new google.maps.places.Autocomplete(destination_input);
+        destination_autocomplete.bindTo('bounds', map);
+
+        // Sets a listener on a radio button to change the filter type on Places
+        // Autocomplete.
+        function setupClickListener(id, mode) {
+          var radioButton = document.getElementById(id);
+          radioButton.addEventListener('click', function() {
+            travel_mode = mode;
+          });
+        }
+        setupClickListener('changemode-walking', google.maps.TravelMode.WALKING);
+        setupClickListener('changemode-transit', google.maps.TravelMode.TRANSIT);
+        setupClickListener('changemode-driving', google.maps.TravelMode.DRIVING);
+
+        function expandViewportToFitPlace(map, place) {
+          if (place.geometry.viewport) {
+            map.fitBounds(place.geometry.viewport);
+          } else {
+            map.setCenter(place.geometry.location);
+            map.setZoom(17);
+          }
+        }
+
+        origin_autocomplete.addListener('place_changed', function() {
+          var place = origin_autocomplete.getPlace();
+          if (!place.geometry) {
+            window.alert("Autocomplete's returned place contains no geometry");
+            return;
+          }
+          expandViewportToFitPlace(map, place);
+
+          // If the place has a geometry, store its place ID and route if we have
+          // the other place ID
+          origin_place_id = place.place_id;
+          route(origin_place_id, destination_place_id, travel_mode,
+                directionsService, directionsDisplay);
+        });
+
+        destination_autocomplete.addListener('place_changed', function() {
+          var place = destination_autocomplete.getPlace();
+          if (!place.geometry) {
+            window.alert("Autocomplete's returned place contains no geometry");
+            return;
+          }
+          expandViewportToFitPlace(map, place);
+
+          // If the place has a geometry, store its place ID and route if we have
+          // the other place ID
+          destination_place_id = place.place_id;
+          route(origin_place_id, destination_place_id, travel_mode,
+                directionsService, directionsDisplay);
+        });
+
+        function route(origin_place_id, destination_place_id, travel_mode,
+                       directionsService, directionsDisplay) {
+          if (!origin_place_id || !destination_place_id) {
+            return;
+          }
+          directionsService.route({
+            origin: {'placeId': origin_place_id},
+            destination: {'placeId': destination_place_id},
+            travelMode: travel_mode
+          }, function(response, status) {
+            if (status === google.maps.DirectionsStatus.OK) {
+              directionsDisplay.setDirections(response);
+            } else {
+              window.alert('Directions request failed due to ' + status);
+            }
+          });
+        }
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPQXWAm0qnXeT9680IHik-69Hlu_OvD98
+&libraries=places&callback=initMap"
+        async defer></script>
+  </body>
+</html>

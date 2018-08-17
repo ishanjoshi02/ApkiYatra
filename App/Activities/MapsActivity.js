@@ -2,7 +2,7 @@ import React from 'react';
 import { Text } from 'react-native';
 import { Icon } from 'react-native-elements'
 
-export default class BlankActivity1 extends React.Component {
+export default class MapsActivity extends React.Component {
 
     static navigationOptions = {
         title: "Blank Screen",

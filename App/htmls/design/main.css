@@ -1,0 +1,678 @@
+@font-face {
+  font-family: logo;
+  src:url(../other/logo.ttf);
+}
+@font-face {
+  font-family: content;
+  src:url(../other/content.ttf);
+}
+a { color: black; }
+body{
+  height:100%;
+  width: 100%;
+  background-color: black;
+  overflow: hidden;
+  font-family: content;
+}
+
+#dash{
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: black;
+  overflow: hidden;
+  display: none;
+}
+#introback{
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height:100%;
+  width: 100%;
+  background-color: black;
+  overflow: hidden;
+}
+
+#instruc{
+  position: absolute;
+  top: 25%;
+  left: 0;
+  background-color: black;
+  height: 75%;
+  width: 100%;
+  font-size: 4vw;
+  color: grey;
+  display: block;
+}
+
+#logo{
+  position: absolute;
+  top:46%;
+  left:50%;
+  height:50%;
+  width:80%;
+  transform: translate(-50%,-50%);
+}
+.mem{
+  position: absolute;;
+  top:30%;
+  left:50%;
+  font-family: logo;
+  color: #00ff99;
+  font-size: 12vh;
+  transform: translate(-50%,-50%);
+}
+
+#cupcake{
+  top:45.5%;
+  color: black;
+  font-size: 6vh;
+}
+#team{
+  position: absolute;
+  bottom:1%;
+  left:50%;
+  font-family: logo;
+  color: #00ff99;
+  font-size: 3vh;
+  transform: translate(-50%,-50%);
+}
+#teamname{
+  font-family: content;
+  font-size: 2vh;
+}
+.button{
+  position: absolute;
+  height: auto;
+  width: auto;
+  padding: 2vw;
+  background-color: #00ff99;
+  font-family: content;
+  color: black;
+  font-size: 4vh;
+  transform: translate(-50%,-50%);
+}
+.button:hover{
+  background-color: white;
+}
+#but1{
+  top:60%;
+  left:50%;
+  display: none;
+}
+
+#hey{
+  position: absolute;
+  top:55%;
+  left:50%;
+  font-family: content;
+  color: #00ff99;
+  font-size: 3vh;
+  transform: translate(-50%,-50%);
+  display: none;
+}
+#name{
+  font-family: logo;
+}
+.upperBar{
+  position: absolute;
+  height: 10%;
+  width: 100%;
+  top:0;
+  left:0;
+  background-color: #00ff99;
+}
+#home{
+  font-size: 6vw;
+  font-family: content;
+  position: absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+}
+.ic{
+  font-size: 5vw;
+  position: absolute;
+  top:50%;
+  left:10%;
+  transform: translate(-50%,-50%);
+}
+#ham{
+    font-size: 6.5vw;
+}
+#lock{
+  left:82.5%;
+}
+
+#userP{
+  position: absolute;
+  height: 60%;
+  width: 10%;
+  top:50%;
+  left:93%;
+  background-color: black;
+  border-radius: 50%;
+  transform: translate(-50%,-50%);
+}
+.lowerBar{
+  display: none;
+  position: absolute;
+  height: 35%;
+  width: 100%;
+  bottom: 0%;
+  left:0%;
+  background-color: #00ff99;
+  animation-duration: 0.2s;
+}
+#proceed{
+  display: none;
+  height: 20%;
+  bottom:0%;
+  animation-duration: 0.1s;
+}
+#proceed2{
+  display: none;
+  height: 20%;
+  bottom:0%;
+  animation-duration: 0.1s;
+  font-size: 5vw;
+}
+#proceed3{
+  display: none;
+  height: 20%;
+  bottom:0%;
+  animation-duration: 0.1s;
+  font-size: 5vw;
+}
+
+#customSearch{
+  animation-duration: 0.2s;
+}
+#lowerBar{
+  animation-duration: 0.2s;
+}
+#sbox{
+  height: 10%;
+  width: 100%;
+  position: absolute;
+  top: 12%;
+  left:0%;
+}
+
+#sresult{
+  height: 75%;
+  width: 88%;
+  position: absolute;
+  top: 25%;
+  left:10%;
+  overflow:auto;
+}
+
+#check{
+  height: 75%;
+  width: 12%;
+  position: absolute;
+  top: 25%;
+  left:0%;
+  display: none;
+  animation-duration: 0.3s;
+}
+
+#sb {
+  position: absolute;
+  top:50%;
+  left:10%;
+  font-size: 5vw;
+    background-color:rgba(0, 0, 0, 0);
+    color:white;
+    border: none;
+    outline:none;
+    height:auto;
+    border: 0.5vw solid;
+    border-color: black;
+    border-bottom-color: gray;
+      transform: translate(0%,-50%);
+}
+#sb:focus {
+  border: 0.5vw solid;
+  border-color: black;
+  border-bottom-color: #00ff99;
+}
+
+
+
+#docbar {
+  position: absolute;
+  top:80%;
+  left:5%;
+  font-size: 5vw;
+    background-color:rgba(0, 0, 0, 0);
+    color:black;
+    border: none;
+    outline:none;
+    height:auto;
+    border: 0.5vw solid;
+    border-color: rgba(0, 0, 0, 0);
+    border-bottom-color: white;
+      transform: translate(0%,-50%);
+}
+#docbar:focus {
+  border: 0.5vw solid;
+    border-color: rgba(0, 0, 0, 0);
+  border-bottom-color: black;
+}
+
+
+#sbut{
+  position: absolute;
+  top:50%;
+  left:80%;
+  color:#00ff99;
+  height: auto;
+  width: auto;
+  padding: 2vw;
+  font-size: 4vw;
+  border: 0.5vw solid #00ff99;
+      transform: translate(0%,-50%);
+}
+#obj{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top:0vh;
+  left:0vw;
+}
+
+#cser{
+  color: white;
+  height: auto;
+  width: auto;
+  position: absolute;
+  top:23%;
+  left:70%;
+  font-size: 3.25vw;
+  transform: translate(0%,-50%);
+}
+
+.social{
+  position: absolute;
+  top:10%;
+  width: 17%;
+  height: auto;
+  font-size: 2.5vw;
+}
+#pro2img{
+  position: absolute;
+  top:50%;
+  left:5%;
+  width: 15%;
+  height: auto;
+  transform: translate(0%,-50%);
+}
+#pro3img{
+  position: absolute;
+  top:60%;
+  right:5%;
+  width: 15%;
+  height: auto;
+  transform: translate(0%,-50%);
+}
+#yt{
+    left: 5%;
+}
+#in{
+    left: 29.3%;
+}
+#fb{
+    right: 29.3%;
+}
+#tw{
+    right: 5%;
+}
+#up1{
+  width: 13%;
+  left:9.6%;
+}
+#up2{
+  width: 13%;
+  left:32.2%;
+}
+#up3{
+  width: 13%;
+  right:32.2%;
+}
+#up4{
+  width: 13%;
+  right:9.6%;
+}
+#d1{
+  top: 55%;
+  width: 13%;
+  left:9.6%;
+}
+#d2{
+  top: 55%;
+  width: 13%;
+  left:32.2%;
+}
+#d3{
+  top: 55%;
+  width: 13%;
+  right:32.2%;
+}
+#d4{
+  top: 55%;
+  width: 13%;
+  right:9.6%;
+}
+
+#wy{
+  width: 14%;
+  left:14.5%;
+}
+#cw{
+  width: 14%;
+  left:43%;
+}
+#dn{
+  width: 14%;
+  right:14.5%;
+}
+.line{
+  position: absolute;
+  top:60%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  height: 1%;
+  width: 70%;
+  background-color: black;
+}
+#pr{
+  top:90%;
+}
+.box{
+  position: absolute;
+  width: 6vw;
+  height: 6vw;
+  top:10%;
+  left:50%;
+  border: 0.5vw solid white;
+  transform: translate(-50%,-50%);
+}
+#locate{
+  top:50%;
+  left:28%;
+  border: 0.5vw solid black;
+  transform: translate(-0%,-50%);
+}
+#locatetext{
+  position: absolute;
+  top:50%;
+  left:38%;
+  transform: translate(-0%,-50%);
+  height: auto;
+  width: auto;
+  font-size: 5vw;
+}
+
+#doctext{
+  position: absolute;
+  top:50%;
+  left:5%;
+  transform: translate(-0%,-90%);
+  height: auto;
+  width: 75%;
+  font-size: 4vw;
+}
+
+#notitext{
+  position: absolute;
+  top:50%;
+  left:28%;
+  transform: translate(-0%,-50%);
+  height: auto;
+  width: 68%;
+  font-size: 4vw;
+}
+
+#c2{
+  top:27%;
+}
+#c3{
+  top:44%;
+}
+#c4{
+  top:61%;
+}
+#c5{
+  top:78%;
+}
+
+.inner{
+  height: 60%;
+  width: 60%;
+  position: absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  color: white;
+  font-size: 4vw;
+}
+
+#go{
+  position: absolute;
+  bottom:7%;
+  right:10%;
+  width: 14vw;
+  height: auto;
+  display: none;
+}
+
+#clopro{
+  color: black;
+  font-size: 4vw;
+  position: absolute;
+  top:2%;
+  right:5%;
+  height: auto;
+  width: auto;
+}
+
+.noti{
+  position: absolute;
+  top:45%;
+  left:30%;
+  width: 70%;
+  height: 10%;
+  transform: translate(-0%,-50%);
+  background-color: #00ff99;
+  animation-duration: 0.3s;
+  display: none;
+}
+
+#noti{
+    animation-duration: 0.3s;
+}
+
+#notimg{
+  position: absolute;
+  top:50%;
+  left:5%;
+  width: 90%;
+  height: 80%;
+  transform: translate(-0%,-50%);
+  font-size: 4vw;
+}
+
+#loader{
+  position: absolute;
+  top:50%;
+  left:50%;
+  width: 50%;
+  height: auto;
+  transform: translate(-50%,-50%);
+  background-color: black;
+  display: none;
+}
+#csdetails{
+  position: absolute;
+  bottom:10%;
+  width: 80%;
+  height: auto;
+  font-size: 4vw;
+  left:50%;
+  transform: translate(-50%,0%);
+}
+
+#track{
+  position: absolute;
+  top:10%;
+  width: 100%;
+  height: 90%;
+  left:0%;
+  background-color: black;
+  display: none;
+}
+
+#trackimg{
+  position: absolute;
+  top:50%;
+  width: 80%;
+  height: auto;
+  left:50%;
+  transform: translate(-50%,-50%);
+}
+
+#trackdetails{
+  position: absolute;
+  top:5%;
+  width: 100%;
+  height: auto;
+  left:0%;
+  color: white;
+  font-size: 4vw;
+}
+
+#remark{
+  position: absolute;
+  bottom:0%;
+  width: 100%;
+  height: 15%;
+  left:0%;
+  color: black;
+  font-size: 4vw;
+  background-color: white;
+}
+#remarkText{
+  position: absolute;
+  top:50%;
+  width: 70%;
+  height: auto;
+  left:10%;
+  transform: translate(0,-50%);
+}
+
+#thanks{
+  position: absolute;
+  top:0;
+  width: 20%;
+  height: auto;
+  right:0%;
+}
+#closeOption{
+  color: white;
+  font-size: 5vw;
+  position: absolute;
+  top:2%;
+  right:5%;
+  height: auto;
+  width: auto;
+}
+
+#card{
+  background-color: #00ff99;
+  position: absolute;
+  height: 17%;
+  width: 70%;
+  top:30%;
+  left:30%;
+  font-size: 3vw;
+  display: none;
+  animation-duration: 0.3s;
+}
+
+#card1{
+  background-color: #00ff99;
+  position: absolute;
+  height: 17%;
+  width: 70%;
+  top:30%;
+  left:30%;
+  font-size: 3vw;
+  display: none;
+  animation-duration: 0.3s;
+}
+#megenta{
+  background-color: #faacab;
+  position: absolute;
+  height: 60%;
+  width: 20%;
+  top:50%;
+  left:20%;
+  transform: translate(-50%,-50%);
+  border: 0.5vw solid;
+  border-color: black;
+}
+
+#seablue{
+  background-color: #d3abfa;
+  position: absolute;
+  height: 60%;
+  width: 20%;
+  top:50%;
+  left:40%;
+  transform: translate(-50%,-50%);
+  border: 0.5vw solid;
+  border-color: black;
+}
+#grey{
+  background-color: #faabd2;
+  position: absolute;
+  height: 60%;
+  width: 20%;
+  top:50%;
+  left:60%;
+  transform: translate(-50%,-50%);
+  border: 0.5vw solid;
+  border-color: black;
+}
+
+#green{
+  background-color: #00ff99;
+  position: absolute;
+  height: 60%;
+  width: 20%;
+  top:50%;
+  left:80%;
+  transform: translate(-50%,-50%);
+  border: 0.5vw solid;
+  border-color: black;
+}
+
+#englishLang{
+  position: absolute;
+  height: 70%;
+  width: 32%;
+  top:40%;
+  left:30%;
+  transform: translate(-50%,-50%);
+}
+#frenchLang{
+  position: absolute;
+  height: 60%;
+  width: 31%;
+  top:44%;
+  left:70%;
+  transform: translate(-50%,-50%);
+}
