@@ -155,7 +155,7 @@ export default class MainActivity extends React.Component {
                         title="Ishan's Home"
                     />
                 </MapView>
-                <Button>Let's go</Button>
+                <Button title="Let\'s go">Let's go</Button>
             </View>
         )
     }
