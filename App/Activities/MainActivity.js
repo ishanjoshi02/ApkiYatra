@@ -1,124 +1,115 @@
-import React from 'react'
-import { View, Button, TouchableOpacity } from 'react-native';
-import { Icon, } from 'react-native-elements'
-import { MapView, Constants, Location, Permissions, } from "expo";
+import React from "react";
+import { View, Button, TouchableOpacity } from "react-native";
+import { Icon } from "react-native-elements";
+import { MapView, Constants, Location, Permissions } from "expo";
 import { Marker } from "react-native-maps";
-import { Autocomplete } from "react-native-autocomplete-input";
-
+import Autocomplete from "./AutoComplete";
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 const GooglePlacesInput = () => {
-    return (
-        <GooglePlacesAutocomplete
-            placeholder='search'
-            minLength={2}
-            autoFocus={false}
-            returnKeyType={'search'}
-            listViewDisplayed='auto'
-            fetchDetails={true}
-            renderDescription={row => row.description}
-            onPress={(data, details = null) => {
-                console.log(data, details)
-            }}
-
-            getDefaultValue={() => ''}
-            query={{
-                key: 'AIzaSyCfLbyBRSOQX6RQrwyYc0KX9bRCfVtbgXw',
-                language: 'en',
-                type: '(locality, sub_locality)'
-            }}
-            currentLocation={true} // Will add a 'Current location' button at the top of the predefined places list
-            currentLocationLabel="Current location"
-            nearbyPlacesAPI='GooglePlacesSearch' // Which API to use: GoogleReverseGeocoding or GooglePlacesSearch
-            GoogleReverseGeocodingQuery={{
-                // available options for GoogleReverseGeocoding API : https://developers.google.com/maps/documentation/geocoding/intro
-            }}
-            GooglePlacesSearchQuery={{
-                // available options for GooglePlacesSearch API : https://developers.google.com/places/web-service/search
-                rankby: 'distance',
-                types: 'food'
-            }}
-
-            filterReverseGeocodingByTypes={['locality', 'administrative_area_level_3']} // filter the reverse geocoding results by types - ['locality', 'administrative_area_level_3'] if you want to display only cities
-            debounce={200} // debounce the requests in ms. Set to 0 to remove debounce. By default 0ms
-        />
-    )
-}
-
+  return (
+    <GooglePlacesAutocomplete
+      placeholder="search"
+      minLength={2}
+      autoFocus={false}
+      returnKeyType={"search"}
+      listViewDisplayed="auto"
+      fetchDetails={true}
+      renderDescription={row => row.description}
+      onPress={(data, details = null) => {
+        console.log(data, details);
+      }}
+      getDefaultValue={() => ""}
+      query={{
+        key: "AIzaSyCfLbyBRSOQX6RQrwyYc0KX9bRCfVtbgXw",
+        language: "en",
+        type: "(locality, sub_locality)"
+      }}
+      currentLocation={true} // Will add a 'Current location' button at the top of the predefined places list
+      currentLocationLabel="Current location"
+      nearbyPlacesAPI="GooglePlacesSearch" // Which API to use: GoogleReverseGeocoding or GooglePlacesSearch
+      GoogleReverseGeocodingQuery={
+        {
+          // available options for GoogleReverseGeocoding API : https://developers.google.com/maps/documentation/geocoding/intro
+        }
+      }
+      GooglePlacesSearchQuery={{
+        // available options for GooglePlacesSearch API : https://developers.google.com/places/web-service/search
+        rankby: "distance",
+        types: "food"
+      }}
+      filterReverseGeocodingByTypes={[
+        "locality",
+        "administrative_area_level_3"
+      ]} // filter the reverse geocoding results by types - ['locality', 'administrative_area_level_3'] if you want to display only cities
+      debounce={200} // debounce the requests in ms. Set to 0 to remove debounce. By default 0ms
+    />
+  );
+};
 
 export default class MainActivity extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      location: {
+        latitude: 18.506765,
+        longitude: 73.815387
+      },
+      errorMessage: null,
+      query: null
+    };
+  }
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            location: {
-                latitude: 18.506765,
-                longitude: 73.815387,
-            },
-            errorMessage: null,
-            query: null,
-        }
+  static navigationOptions = {
+    tabBarLabel: "Commute",
+    tabBarIcon: <Icon name="google-maps" type="material-community" />
+  };
+
+  componentWillMount() {
+    if (!Constants.isDevice) {
+      this.setState({
+        errorMessage: "This will not work on an android emulator"
+      });
+    } else {
+      try {
+        this._getLocationAsync().catch(e => console.log(e));
+      } catch (error) {
+        console.log("_getLocationAsync Error\n", e);
+      }
     }
+  }
 
-
-    static navigationOptions = {
-        tabBarLabel: "Commute",
-        tabBarIcon: <Icon
-            name='google-maps'
-            type='material-community'
-        />
+  _getLocationAsync = async () => {
+    try {
+      const { status } = await Permissions.askAsync(Permissions.LOCATION);
+      if (status === "granted") {
+        console.log("granted");
+        const location = await Location.getCurrentPositionAsync({
+          enableHighAccuracy: true
+        });
+        console.log(location);
+        this.setState({ location: location.coords });
+      } else {
+        this.setState({
+          errorMessage: "Permission to access Location denied"
+        });
+      }
+    } catch (e) {
+      console.log("Error for permissions: ", e);
     }
+  };
 
+  _filterData = query => {
+    console.log(query);
+  };
 
-    componentWillMount() {
-        if (!Constants.isDevice) {
-            this.setState({
-                errorMessage: "This will not work on an android emulator"
-            })
-        } else {
-            try {
-                this._getLocationAsync().catch(e => console.log(e))
-            } catch (error) {
-                console.log('_getLocationAsync Error\n', e)
-            }
-        }
-    }
+  render() {
+    const { query } = this.state;
+    const data = this._filterData(query);
 
-    _getLocationAsync = async () => {
-
-        try {
-            const { status } = await Permissions.askAsync(Permissions.LOCATION);
-            if (status === 'granted') {
-                console.log('granted')
-                const location = await Location.getCurrentPositionAsync({ enableHighAccuracy: true })
-                console.log(location)
-                this.setState({ location: location.coords })
-            } else {
-                this.setState({
-                    errorMessage: "Permission to access Location denied"
-                })
-            }
-        } catch (e) {
-            console.log("Error for permissions: ", e)
-        }
-
-
-    }
-
-
-    _filterData = (query) => {
-        console.log(query)
-    }
-
-
-    render() {
-
-        const { query } = this.state
-        const data = this._filterData(query)
-
-        return (
-            <View
-                style={{ width: '100%', height: "100%" }}
-            >
-                <View>
+    return (
+      <View style={{ width: "100%", height: "100%" }}>
+        <Autocomplete />
+        {/* <View>
                     <Autocomplete
                         data={data}
                         defaultValue={query}
@@ -139,24 +130,22 @@ export default class MainActivity extends React.Component {
                             </TouchableOpacity>
                         )}
                     />
-                </View>
-                <MapView
-                    style={{ flex: 1, }}
-                    initialRegion={{
-                        latitude: this.state.location.latitude,
-                        longitude: this.state.location.longitude,
-                        latitudeDelta: 0.0922,
-                        longitudeDelta: 0.0421,
-                    }}
-                    onMapReady={e => console.log('ready')}
-                >
-                    <Marker
-                        coordinate={this.state.location}
-                        title="Ishan's Home"
-                    />
-                </MapView>
-                <Button title="Let\'s go">Let's go</Button>
-            </View>
-        )
-    }
+                </View> */}
+        {/* <Autocomplete /> */}
+        <MapView
+          style={{ flex: 1 }}
+          initialRegion={{
+            latitude: this.state.location.latitude,
+            longitude: this.state.location.longitude,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421
+          }}
+          onMapReady={e => console.log("ready")}
+        >
+          <Marker coordinate={this.state.location} title="Ishan's Home" />
+        </MapView>
+        <Button title="Let\'s go">Let's go</Button>
+      </View>
+    );
+  }
 }
