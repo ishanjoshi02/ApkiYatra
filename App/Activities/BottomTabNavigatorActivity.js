@@ -1,12 +1,17 @@
 import { createBottomTabNavigator } from "react-navigation";
 import NavigationClass from "./MainActivity";
 import SettingsActivity from "./SettingsActivity";
+import PastCommutesActivity from "./PastCommutes";
 import React from "react";
 import { Icon, Header } from "react-native-elements";
 
 const NavBar = createBottomTabNavigator({
     StackBar: {
         screen: NavigationClass,
+    },
+    PastCommutes:
+    {
+        screen: PastCommutesActivity,
     },
     Settings: {
         screen: SettingsActivity,

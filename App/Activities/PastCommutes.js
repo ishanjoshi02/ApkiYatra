@@ -4,6 +4,10 @@ import { FlatList, View, Text } from "react-native";
 
 export default class PastCommutesActivity extends React.Component {
 
+    static navigationOptions = {
+        tabBarLabel:"Past Commutes",
+    }
+
     constructor(props) {
         super(props)
         this.data = [
