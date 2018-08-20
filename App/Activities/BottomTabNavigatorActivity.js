@@ -1,16 +1,12 @@
 import { createBottomTabNavigator } from "react-navigation";
-import MainActivity from "./MainActivity";
+import NavigationClass from "./MainActivity";
 import SettingsActivity from "./SettingsActivity";
 import React from "react";
 import { Icon, Header } from "react-native-elements";
 
 const NavBar = createBottomTabNavigator({
-
-
-    Main: {
-        screen: MainActivity,
-
-
+    StackBar: {
+        screen: NavigationClass,
     },
     Settings: {
         screen: SettingsActivity,

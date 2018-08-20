@@ -1,6 +1,6 @@
 import React from "react";
-import { Card, Tile } from "react-native-elements";
-import { View } from "react-native";
+import { Card, Tile, Button, Icon } from "react-native-elements";
+import { View, Text } from "react-native";
 
 export default class ETicketActivity extends React.Component {
 
@@ -18,6 +18,10 @@ export default class ETicketActivity extends React.Component {
         }
     }
 
+    static navigationOptions = {
+        header: null,
+    }
+
     render() {
 
         const { fare } = this.state
@@ -25,25 +29,29 @@ export default class ETicketActivity extends React.Component {
         const { endPoint } = this.state
         const { midPoints } = this.state
 
-        var titleText = "Fare: " + fare + "\nStart Point: " + startPoint + "\nEnd Point: " + endPoint
+        const titleText = "Fare: " + fare + "\nStart Point: " + startPoint + "\nEnd Point: " + endPoint
 
         return (
-            <Card>
-                <View>
-                    <Tile
-                        imageSrc={{ uri: 'https://graygrids.com/wp-content/uploads/edd/2018/01/I.png' }}
-                        title={{ titleText }}
-                        featured
-                        contentContainerStyle={{ height: 70 }}
-                        onPress={()=> {console.log('Hello E Ticket')}}
-                    >
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1 }}>
-                            <Text>{{ startPoint }}</Text>
-                            <Text>{{ endPoint }}</Text>
-                        </View>
-                    </Tile>
-                </View>
-            </Card>
+            <View
+                style={{ flex: 1 }}
+            >
+                <Card>
+                    <View>
+                        <Tile
+                            imageSrc={{ uri: 'https://graygrids.com/wp-content/uploads/edd/2018/01/I.png' }}
+                            title={titleText}
+                            featured
+                            onPress={() => { console.log('Hello E Ticket') }}
+                        >
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1 }}>
+                                <Text>{{ startPoint }}</Text>
+                                <Text>{{ endPoint }}</Text>
+                            </View>
+                        </Tile>
+                    </View>
+                </Card>
+                <Button title='Go back' onPress={() => { this.props.navigation.navigate('Map') }} />
+            </View>
         )
     }
 }

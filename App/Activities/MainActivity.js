@@ -4,47 +4,12 @@ import { Icon, } from 'react-native-elements'
 import { MapView, Constants, Location, Permissions, } from "expo";
 import { Marker } from "react-native-maps";
 import { Autocomplete } from "react-native-autocomplete-input";
-
-const GooglePlacesInput = () => {
-    return (
-        <GooglePlacesAutocomplete
-            placeholder='search'
-            minLength={2}
-            autoFocus={false}
-            returnKeyType={'search'}
-            listViewDisplayed='auto'
-            fetchDetails={true}
-            renderDescription={row => row.description}
-            onPress={(data, details = null) => {
-                console.log(data, details)
-            }}
-
-            getDefaultValue={() => ''}
-            query={{
-                key: 'AIzaSyCfLbyBRSOQX6RQrwyYc0KX9bRCfVtbgXw',
-                language: 'en',
-                type: '(locality, sub_locality)'
-            }}
-            currentLocation={true} // Will add a 'Current location' button at the top of the predefined places list
-            currentLocationLabel="Current location"
-            nearbyPlacesAPI='GooglePlacesSearch' // Which API to use: GoogleReverseGeocoding or GooglePlacesSearch
-            GoogleReverseGeocodingQuery={{
-                // available options for GoogleReverseGeocoding API : https://developers.google.com/maps/documentation/geocoding/intro
-            }}
-            GooglePlacesSearchQuery={{
-                // available options for GooglePlacesSearch API : https://developers.google.com/places/web-service/search
-                rankby: 'distance',
-                types: 'food'
-            }}
-
-            filterReverseGeocodingByTypes={['locality', 'administrative_area_level_3']} // filter the reverse geocoding results by types - ['locality', 'administrative_area_level_3'] if you want to display only cities
-            debounce={200} // debounce the requests in ms. Set to 0 to remove debounce. By default 0ms
-        />
-    )
-}
+import { createStackNavigator } from "react-navigation";
+import ETicketActivity from "./ETicketActivity";
 
 
-export default class MainActivity extends React.Component {
+
+class MainActivity extends React.Component {
 
     constructor(props) {
         super(props)
@@ -58,13 +23,8 @@ export default class MainActivity extends React.Component {
         }
     }
 
-
     static navigationOptions = {
-        tabBarLabel: "Commute",
-        tabBarIcon: <Icon
-            name='google-maps'
-            type='material-community'
-        />
+        header: null
     }
 
 
@@ -119,8 +79,8 @@ export default class MainActivity extends React.Component {
                 style={{ width: '100%', height: "100%" }}
             >
                 <View>
-                    <Autocomplete
-                        data={data}
+                    {/* <Autocomplete
+                        data={[]}
                         defaultValue={query}
                         onChangeText={text => this.setState({ query: text })}
                         renderItem={item => (
@@ -128,9 +88,9 @@ export default class MainActivity extends React.Component {
                                 <Text>{item}</Text>
                             </TouchableOpacity>
                         )}
-                    />
-                    <Autocomplete
-                        data={data}
+                    /> */}
+                    {/* <Autocomplete
+                        data={"hdsfkss"}
                         defaultValue={query}
                         onChangeText={text => this.setState({ query: text })}
                         renderItem={item => (
@@ -138,7 +98,7 @@ export default class MainActivity extends React.Component {
                                 <Text>{item}</Text>
                             </TouchableOpacity>
                         )}
-                    />
+                    /> */}
                 </View>
                 <MapView
                     style={{ flex: 1, }}
@@ -155,8 +115,30 @@ export default class MainActivity extends React.Component {
                         title="Ishan's Home"
                     />
                 </MapView>
-                <Button title="Let\'s go">Let's go</Button>
+                <Button title="Let's go" onPress={() => { this.props.navigation.navigate('ETicketActivity') }}>Let's go</Button>
             </View>
+        )
+    }
+}
+
+
+const StackNavBar = createStackNavigator({
+    Map: MainActivity,
+    ETicketActivity: ETicketActivity,
+})
+
+export default class NavigationClass extends React.Component {
+    static navigationOptions = {
+        tabBarLabel: "Commute",
+        tabBarIcon: <Icon
+            name='google-maps'
+            type='material-community'
+        />
+    }
+
+    render() {
+        return (
+            <StackNavBar />
         )
     }
 }

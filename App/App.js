@@ -4,7 +4,7 @@ import { createStackNavigator } from 'react-navigation';
 import SignUpActivity from './Activities/SignUpActivity';
 import LoginActivity from './Activities/LoginActivity';
 import LoadingActivity from './Activities/LoadingActivity'
-import BottomTabNavigatorActivity from './Activities/BottomTabNavigatorActivity';
+import TabClass from './Activities/BottomTabNavigatorActivity';
 
 class HomeScreen extends React.Component {
   render() {
@@ -16,8 +16,6 @@ class HomeScreen extends React.Component {
   }
 }
 
-
-
 export default createStackNavigator({
   Loading: {
     screen: LoadingActivity,
@@ -26,7 +24,7 @@ export default createStackNavigator({
     screen: SignUpActivity,
   },
   Main: {
-    screen: BottomTabNavigatorActivity,
+    screen: TabClass,
   },
   Login: {
     screen: LoginActivity,
