@@ -1,6 +1,6 @@
 import React from 'react';
-import { TextInput, View, StyleSheet, Text } from 'react-native';
-import { Icon, Button, Card } from 'react-native-elements';
+import { Button, View, Text } from 'react-native';
+import { Icon, FormInput, FormLabel, FormValidationMessage, Card } from 'react-native-elements';
 import { auth } from '../utils/firebase';
 
 export default class LoginActivity extends React.Component {
@@ -31,8 +31,6 @@ export default class LoginActivity extends React.Component {
       await auth.signInWithEmailAndPassword(this.state.email, this.state.password)
       this.props.navigation.navigate('Main')
     } catch (error) {
-      var errorCode = error.code;
-      var errorMessage = error.message;
       this.setState({
         errorMessage: error.message
       })
@@ -41,45 +39,33 @@ export default class LoginActivity extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Log In</Text>
-        {this.state.errorMessage &&
-          <Text style={{ color: 'red' }}>
-            {this.state.errorMessage}
-          </Text>}
-        <TextInput
-          placeholder="Email"
-          autoCapitalize="none"
-          style={styles.textInput}
-          onChangeText={email => this.setState({ email })}
-          value={this.state.email}
-        />
-        <TextInput
-          secureTextEntry
-          placeholder="Password"
-          autoCapitalize="none"
-          style={styles.textInput}
-          onChangeText={password => this.setState({ password })}
-          value={this.state.password}
-        />
-        <Button title="Log In" onPress={this.handleLogIn} />
-        
-      </View>
+      <Card
+        containerStyle={{ padding: 20, borderRadius: 10, }}
+      >
+        <View style={{}}>
+          <Text style={{ fontSize: 24, marginLeft: 20, marginBottom: 10, marginTop: 10, }}>
+            Log In
+          </Text>
+          {this.state.errorMessage &&
+            <FormValidationMessage>
+              {this.state.errorMessage}
+            </FormValidationMessage>}
+
+          <FormLabel>E-mail</FormLabel>
+          <FormInput autoCapitalize='none' onChangeText={email => this.setState({ email })} />
+
+          <FormLabel>Password</FormLabel>
+          <FormInput
+            secureTextEntry
+            autoCapitalize='none'
+            value={this.state.password}
+            onChangeText={password => this.setState({ password })}
+          />
+          <View style={{ margin: 20 }}>
+            <Button title="Log In" onPress={this.handleLogIn} />
+          </View>
+        </View>
+      </Card>
     )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  textInput: {
-    height: 40,
-    width: '90%',
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginTop: 8
-  }
-})
