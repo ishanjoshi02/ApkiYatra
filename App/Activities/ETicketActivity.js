@@ -6,7 +6,7 @@ export default class ETicketActivity extends React.Component {
 
     constructor(props) {
         super(props)
-        this.state = {
+        this.data = {
             fare: 200,
             startPoint: "MIT College of Engineering",
             endPoint: "Ojas Apartments",
@@ -41,65 +41,61 @@ export default class ETicketActivity extends React.Component {
     }
 
     addIconsToData = () => {
-        var midPoints = this.state.midPoints;
+        var midPoints = this.data.midPoints;
         for (var i = 0; i < midPoints.length; i += 1) {
             var icon = null
             var type = null
             switch (midPoints[i].mode) {
                 case "Bus":
-                    icon: 'bus'
-                    type: 'material-community'
+                    icon = 'bus'
+                    type = 'material-community'
                     break;
                 case "Train":
-                    icon: 'train'
-                    type: 'material-community'
+                    icon = 'train'
+                    type = 'material-community'
                     break;
                 case "Walking":
-                    icon: 'md-walk'
-                    type: 'ionicon'
+                    icon = 'md-walk'
+                    type = 'ionicon'
                 default:
                     break;
             }
 
             midPoints[i].icon = icon
             midPoints[i].iconType = type
+            midPoints[i].id = i
         }
 
-        this.setState(
-            midPoints = midPoints
-        )
+        this.data.midPoints = midPoints
+
+        console.log(midPoints)
 
     }
 
     render() {
 
-        const { fare } = this.state
-        const { startPoint } = this.state
-        const { endPoint } = this.state
-        const { midPoints } = this.state
-
-        var commuteDetailsText = startPoint + " -> " + endPoint
-
+        var commuteDetailsText = this.data.startPoint + " -> " + this.data.endPoint
         this.addIconsToData()
-
         return (
             <View
                 style={{ flex: 1 }}
             >
                 <Button title='Pay' onPress={() => { console.log('Payment') }} />
                 <Text>{commuteDetailsText}</Text>
-                <ScrollView>
+                <ScrollView
+                    contentContainerStyle={{ flex: 1 }}
+                >
                     {
-                        midPoints.map((item, key) => {
+                        this.data.midPoints.map((item) => (
                             <Card
-                                containerStyle={{ margin: 10, }}
+                                key={item.id}
                                 title={item.mode}
-                                icon={<Icon name={item.icon} type={item.iconType} />}
                             >
-                                <Text>{item.stop}</Text>
-                                <Text>{item.ticketFare}</Text>
+                                <Icon name={item.icon} type={item.iconType} />
+                                <Text>Station : {item.stop}</Text>
+                                <Text>Fare : {item.ticketFare}</Text>
                             </Card>
-                        })
+                        ))
                     }
                 </ScrollView>
                 <Button title='Go back' onPress={() => { this.props.navigation.navigate('Map') }} />
