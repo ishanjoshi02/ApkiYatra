@@ -1,8 +1,8 @@
 import React from "react";
 import { Card, Icon } from "react-native-elements";
-import { View, Text, ScrollView, BackHandler, Button } from "react-native";
+import {StyleSheet,TouchableOpacity, View, Text, ScrollView, BackHandler, Button } from "react-native";
 
-export default class ETicketActivity extends React.Component {
+class ETicketActivity extends React.Component {
 
     constructor(props) {
         super(props)
@@ -45,7 +45,7 @@ export default class ETicketActivity extends React.Component {
             type='material-community'
         />,
     }
-    
+
     addIconsToData = () => {
         var midPoints = this.data.midPoints;
         for (var i = 0; i < midPoints.length; i += 1) {
@@ -86,19 +86,26 @@ export default class ETicketActivity extends React.Component {
             <View
                 style={{ flex: 1 }}
             >
-                <Card>
-                    <Button title='Pay' onPress={() => { console.log('Payment') }} />
-                    <View
+            <TouchableOpacity
+            style ={styles.backButton}
+            onPress={() => { this.props.navigation.navigate('MainActivity') }} >
+            <Text style = {{color: '#dd525b'}}> Go Back </Text>
+            </TouchableOpacity>
 
-                        style={{ flexDirection: 'row' }}
-                    >
-                        <Text>{this.data.startPoint}</Text>
-                        <Icon name='arrow-long-right' type='entypo' />
-                        <Text>{this.data.endPoint}</Text>
-
-                    </View>
-                </Card>
                 <ScrollView>
+
+                <View>
+                      <View style={{flexDirection: 'row' }} >
+                        <View style={styles.travelPoint}>
+                        <Text style={{textAlignVertical: "center",textAlign: "center",}} >{this.data.startPoint}</Text>
+                        </View>
+                        <Icon name='arrow-long-right' type='entypo' />
+                        <View style={styles.travelPoint}>
+                        <Text style={{textAlignVertical: "center",textAlign: "center",}} >{this.data.endPoint}</Text>
+                        </View>
+                      </View>
+                </View>
+
                     {
                         this.data.midPoints.map((item) => (
                             <Card
@@ -112,8 +119,51 @@ export default class ETicketActivity extends React.Component {
                         ))
                     }
                 </ScrollView>
-                <Button title='Go back' onPress={() => { this.props.navigation.navigate('MainActivity') }} />
+
+                <TouchableOpacity
+                style ={styles.payButton}
+                onPress={() => { console.log('Payment') }} >
+                <Text> Rs. 100 PAY </Text>
+                </TouchableOpacity>
             </View>
         )
     }
 }
+const styles = StyleSheet.create({
+  container: {
+    borderRadius: 4,
+    borderWidth: 0.5,
+    borderColor: '#d6d7da',
+  },
+  travelPoint: {
+    flex: 1,
+    padding: 15,
+    margin: 10,
+    borderRadius: 50,
+    backgroundColor: '#F5F5F5',
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  backButton: {
+  alignItems: 'center',
+  borderWidth: 2,
+  borderColor: '#dd525b',
+  padding: 10,
+  margin: 10,
+  borderRadius: 20
+  },
+  payButton: {
+  alignItems: 'center',
+  backgroundColor: '#7cdd7f',
+  padding: 10,
+  margin: 10,
+  borderRadius: 20,
+  elevation: 2,
+  },
+  title: {
+    fontSize: 19,
+    fontWeight: 'bold',
+  }
+});
+
+export default ETicketActivity;
