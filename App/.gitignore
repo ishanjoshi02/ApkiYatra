@@ -17,3 +17,5 @@ yarn-debug.log*
 yarn-error.log*
 
 utils/constants.js
+node_modules
+API_KEYS/keys.js
