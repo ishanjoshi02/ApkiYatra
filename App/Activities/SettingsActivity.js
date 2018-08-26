@@ -31,21 +31,6 @@ export default class SettingsActivity extends React.Component {
                     flexGrow: 1,
                 }}
             >
-                <Avatar
-                    size='xlarge'
-                    rounded
-                    icon={{ name: 'user' }}
-                    title='IJ'
-                    onPress={() => console.log("Works")}
-                />
-                <Button
-                    title='Google Sign In'
-                    onPress={this.handleGoogleSignIn.bind(this)}
-                />
-                <Button
-                    title='Facebook Sign In'
-                    onPress={this.handleFacebookSignIn.bind(this)}
-                />
             </View>
         )
     }

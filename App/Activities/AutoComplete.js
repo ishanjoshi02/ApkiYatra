@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F5FCFF",
     flex: 1,
     paddingTop: 0,
-    height: 100
+    height: 50,
   },
   autocompleteContainer: {
     marginLeft: 0,

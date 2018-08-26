@@ -39,33 +39,39 @@ export default class LoginActivity extends React.Component {
 
   render() {
     return (
-      <Card
-        containerStyle={{ padding: 20, borderRadius: 10, }}
+      <View
+        style={{
+          flex: 1,
+        }}
       >
-        <View style={{}}>
-          <Text style={{ fontSize: 24, marginLeft: 20, marginBottom: 10, marginTop: 10, }}>
-            Log In
+        <Card
+          containerStyle={{ padding: 20, borderRadius: 10, }}
+        >
+          <View style={{}}>
+            <Text style={{ fontSize: 24, marginLeft: 20, marginBottom: 10, marginTop: 10, }}>
+              Log In
           </Text>
-          {this.state.errorMessage &&
-            <FormValidationMessage>
-              {this.state.errorMessage}
-            </FormValidationMessage>}
+            {this.state.errorMessage &&
+              <FormValidationMessage>
+                {this.state.errorMessage}
+              </FormValidationMessage>}
 
-          <FormLabel>E-mail</FormLabel>
-          <FormInput autoCapitalize='none' onChangeText={email => this.setState({ email })} />
+            <FormLabel>E-mail</FormLabel>
+            <FormInput autoCapitalize='none' onChangeText={email => this.setState({ email })} />
 
-          <FormLabel>Password</FormLabel>
-          <FormInput
-            secureTextEntry
-            autoCapitalize='none'
-            value={this.state.password}
-            onChangeText={password => this.setState({ password })}
-          />
-          <View style={{ margin: 20 }}>
-            <Button title="Log In" onPress={this.handleLogIn} />
+            <FormLabel>Password</FormLabel>
+            <FormInput
+              secureTextEntry
+              autoCapitalize='none'
+              value={this.state.password}
+              onChangeText={password => this.setState({ password })}
+            />
+            <View style={{ margin: 20 }}>
+              <Button title="Log In" onPress={this.handleLogIn} />
+            </View>
           </View>
-        </View>
-      </Card>
+        </Card>
+      </View>
     )
   }
 }

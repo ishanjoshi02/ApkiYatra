@@ -1,6 +1,6 @@
 import React from "react";
-import { Card, Tile, Button, Icon } from "react-native-elements";
-import { View, Text, ScrollView } from "react-native";
+import { Card, Icon } from "react-native-elements";
+import { View, Text, ScrollView, BackHandler, Button } from "react-native";
 
 export default class ETicketActivity extends React.Component {
 
@@ -37,9 +37,15 @@ export default class ETicketActivity extends React.Component {
     }
 
     static navigationOptions = {
+        showLabel: false,
         header: null,
+        tabBarLabel: "Commute",
+        tabBarIcon: <Icon
+            name='google-maps'
+            type='material-community'
+        />,
     }
-
+    
     addIconsToData = () => {
         var midPoints = this.data.midPoints;
         for (var i = 0; i < midPoints.length; i += 1) {
@@ -80,11 +86,19 @@ export default class ETicketActivity extends React.Component {
             <View
                 style={{ flex: 1 }}
             >
-                <Button title='Pay' onPress={() => { console.log('Payment') }} />
-                <Text>{commuteDetailsText}</Text>
-                <ScrollView
-                    contentContainerStyle={{ flex: 1 }}
-                >
+                <Card>
+                    <Button title='Pay' onPress={() => { console.log('Payment') }} />
+                    <View
+
+                        style={{ flexDirection: 'row' }}
+                    >
+                        <Text>{this.data.startPoint}</Text>
+                        <Icon name='arrow-long-right' type='entypo' />
+                        <Text>{this.data.endPoint}</Text>
+
+                    </View>
+                </Card>
+                <ScrollView>
                     {
                         this.data.midPoints.map((item) => (
                             <Card
@@ -98,7 +112,7 @@ export default class ETicketActivity extends React.Component {
                         ))
                     }
                 </ScrollView>
-                <Button title='Go back' onPress={() => { this.props.navigation.navigate('Map') }} />
+                <Button title='Go back' onPress={() => { this.props.navigation.navigate('MainActivity') }} />
             </View>
         )
     }
