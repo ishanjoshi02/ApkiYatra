@@ -25,34 +25,30 @@ print(destinationdf)
 
 destinationdf['boardingdate'] = destinationdf['Boarding Time'].str.split(' ').str.get(0)
 destinationdf['boardingtime'] = destinationdf['Boarding Time'].str.split(' ').str.get(1)
-
 destinationdf['deboardingdate'] = destinationdf['Deboarding Time'].str.split(' ').str.get(0)
 destinationdf['deboardingtime'] = destinationdf['Deboarding Time'].str.split(' ').str.get(1)
-
 current_time = datetime.now().strftime('%H:%M')
-
 print(destinationdf['boardingdate'])
 print(destinationdf['boardingtime'])
-
 iend = len(destinationdf)
-##
-##
-##print(destinationdf['boardingtime'][0])
-##print(destinationdf['boardingtime'][1])
-##print(destinationdf['boardingtime'][2625])
-##print(destinationdf['boardingtime'][3])
-##print(destinationdf['boardingtime'][4])
-##print(destinationdf['boardingtime'][5])
+
+
+mList = destinationdf['boardingtime']
+
+
+for element in mList:
+    print(element)
 
 
 
 
+#print(destinationdf['boardingtime'][0])
+#print(destinationdf['boardingtime'][1])
+#print(destinationdf['boardingtime'][2625])
+#print(destinationdf['boardingtime'][3])
+#print(destinationdf['boardingtime'][4])
+#print(destinationdf['boardingtime'][5])
 
-
-for i in range(0, iend):
-    print(destinationdf['boardingtime'][i])
-
-    
     
 ##    if(destinationdf['boardingtime'][i] > current_time):
 ##        eta = destinationdf['deboardingtime'][i] - destinationdf['boardingtime'][i]
