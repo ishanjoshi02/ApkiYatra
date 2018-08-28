@@ -1,25 +1,23 @@
-import React from 'react';
-import { View, Text } from 'react-native';
-import { createStackNavigator } from 'react-navigation';
-import SignUpActivity from './Activities/SignUpActivity';
-import LoginActivity from './Activities/LoginActivity';
-import LoadingActivity from './Activities/LoadingActivity'
-import TabClass from './Activities/BottomTabNavigatorActivity';
+import React from "react";
+import { View, Text } from "react-native";
+import { createStackNavigator } from "react-navigation";
+import SignUpActivity from "./Activities/SignUpActivity";
+import LoginActivity from "./Activities/LoginActivity";
+import LoadingActivity from "./Activities/LoadingActivity";
+import TabClass from "./Activities/BottomTabNavigatorActivity";
 export default createStackNavigator({
   Loading: {
-    screen: LoadingActivity,
+    screen: LoadingActivity
   },
   Signup: {
-    screen: SignUpActivity,
+    screen: SignUpActivity
   },
   Main: {
-    screen: TabClass,
+    screen: TabClass
   },
   Login: {
-    screen: LoginActivity,
+    screen: LoginActivity
   },
-  
-    initialRouteName: 'Loading'
-  
-});
 
+  initialRouteName: "Loading"
+});

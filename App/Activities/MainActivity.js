@@ -138,7 +138,7 @@ class MainActivity extends React.Component {
 
                 const res = await request(location.coords.latitude, location.coords.longitude)
                 console.log("HELLLLOOOOO\n")
-                console.dir(res)
+                // console.dir(res)
                 this.setState({
                     originMeta: {
                         name: res.results[0].address_components[0].short_name,
