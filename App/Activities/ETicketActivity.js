@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Icon } from "react-native-elements";
-import {StyleSheet,TouchableOpacity, View, Text, ScrollView, BackHandler, Button } from "react-native";
-
+import { StyleSheet, TouchableOpacity, View, Text, ScrollView, BackHandler, Button } from "react-native";
+import GoogleDirectionsAPIKey from '../API_KEYS/keys'
 class ETicketActivity extends React.Component {
 
     constructor(props) {
@@ -34,6 +34,16 @@ class ETicketActivity extends React.Component {
                 },
             ]
         }
+
+        console.log(
+            this.props.navigation.getParam('origin', 'null')
+        )
+
+        console.log(
+            this.props.navigation.getParam('destination', 'null')
+        )
+
+
     }
 
     static navigationOptions = {
@@ -74,7 +84,7 @@ class ETicketActivity extends React.Component {
 
         this.data.midPoints = midPoints
 
-        console.log(midPoints)
+
 
     }
 
@@ -82,29 +92,31 @@ class ETicketActivity extends React.Component {
 
         var commuteDetailsText = this.data.startPoint + " -> " + this.data.endPoint
         this.addIconsToData()
+
+
         return (
             <View
                 style={{ flex: 1 }}
             >
-            <TouchableOpacity
-            style ={styles.backButton}
-            onPress={() => { this.props.navigation.navigate('MainActivity') }} >
-            <Text style = {{color: '#dd525b'}}> Go Back </Text>
-            </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.backButton}
+                    onPress={() => { this.props.navigation.navigate('MainActivity') }} >
+                    <Text style={{ color: '#dd525b' }}> Go Back </Text>
+                </TouchableOpacity>
 
                 <ScrollView>
 
-                <View>
-                      <View style={{flexDirection: 'row' }} >
-                        <View style={styles.travelPoint}>
-                        <Text style={{textAlignVertical: "center",textAlign: "center",}} >{this.data.startPoint}</Text>
+                    <View>
+                        <View style={{ flexDirection: 'row' }} >
+                            <View style={styles.travelPoint}>
+                                <Text style={{ textAlignVertical: "center", textAlign: "center", }} >{this.data.startPoint}</Text>
+                            </View>
+                            <Icon name='arrow-long-right' type='entypo' />
+                            <View style={styles.travelPoint}>
+                                <Text style={{ textAlignVertical: "center", textAlign: "center", }} >{this.data.endPoint}</Text>
+                            </View>
                         </View>
-                        <Icon name='arrow-long-right' type='entypo' />
-                        <View style={styles.travelPoint}>
-                        <Text style={{textAlignVertical: "center",textAlign: "center",}} >{this.data.endPoint}</Text>
-                        </View>
-                      </View>
-                </View>
+                    </View>
 
                     {
                         this.data.midPoints.map((item) => (
@@ -121,49 +133,49 @@ class ETicketActivity extends React.Component {
                 </ScrollView>
 
                 <TouchableOpacity
-                style ={styles.payButton}
-                onPress={() => { console.log('Payment') }} >
-                <Text> Rs. 100 PAY </Text>
+                    style={styles.payButton}
+                    onPress={() => { console.log('Payment') }} >
+                    <Text> Rs. 100 PAY </Text>
                 </TouchableOpacity>
             </View>
         )
     }
 }
 const styles = StyleSheet.create({
-  container: {
-    borderRadius: 4,
-    borderWidth: 0.5,
-    borderColor: '#d6d7da',
-  },
-  travelPoint: {
-    flex: 1,
-    padding: 15,
-    margin: 10,
-    borderRadius: 50,
-    backgroundColor: '#F5F5F5',
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  backButton: {
-  alignItems: 'center',
-  borderWidth: 2,
-  borderColor: '#dd525b',
-  padding: 10,
-  margin: 10,
-  borderRadius: 20
-  },
-  payButton: {
-  alignItems: 'center',
-  backgroundColor: '#7cdd7f',
-  padding: 10,
-  margin: 10,
-  borderRadius: 20,
-  elevation: 2,
-  },
-  title: {
-    fontSize: 19,
-    fontWeight: 'bold',
-  }
+    container: {
+        borderRadius: 4,
+        borderWidth: 0.5,
+        borderColor: '#d6d7da',
+    },
+    travelPoint: {
+        flex: 1,
+        padding: 15,
+        margin: 10,
+        borderRadius: 50,
+        backgroundColor: '#F5F5F5',
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    backButton: {
+        alignItems: 'center',
+        borderWidth: 2,
+        borderColor: '#dd525b',
+        padding: 10,
+        margin: 10,
+        borderRadius: 20
+    },
+    payButton: {
+        alignItems: 'center',
+        backgroundColor: '#7cdd7f',
+        padding: 10,
+        margin: 10,
+        borderRadius: 20,
+        elevation: 2,
+    },
+    title: {
+        fontSize: 19,
+        fontWeight: 'bold',
+    }
 });
 
 export default ETicketActivity;

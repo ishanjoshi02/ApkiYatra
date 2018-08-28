@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Button, StyleSheet,Text, TouchableOpacity } from "react-native";
+import { View, Button, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { Icon } from "react-native-elements";
 import { MapView, Constants, Location, Permissions } from "expo";
 import { Marker } from "react-native-maps";
@@ -8,10 +8,13 @@ import GoogleDirectionsAPIKey from "../API_KEYS/keys";
 import Autocomplete from "./AutoComplete";
 import { Geocoder } from 'react-native-geocoder'
 
+
 class MainActivity extends React.Component {
     constructor(props) {
         super(props);
+
         this.state = {
+
             location: {
                 latitude: 18.506765,
                 longitude: 73.815387
@@ -26,10 +29,16 @@ class MainActivity extends React.Component {
             destination: {
                 latitude: 18.481768,
                 longitude: 73.807372
+            },
+            originMeta: {
+                name: null,
+                place_id: null,
+            },
+            destinationMeta: {
+                name: null,
+                place_id: null,
             }
         };
-
-        console.log(GoogleDirectionsAPIKey)
 
     }
 
@@ -45,13 +54,36 @@ class MainActivity extends React.Component {
     handleLocationSelect = async (selectedLocation) => {
 
         const url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + selectedLocation.title + '&key=' + GoogleDirectionsAPIKey;
-        const res = await fetch(url)
-        
-        console.log("Result: " + res.json())
-        console.log(res.geometry.location)
-        this.setState({
-            destination:  res.geometry.location
+
+        const u = 'https://maps.googleapis.com/maps/api/directions/json?origin=mit+college+of+engineering+kothrud&destination=' + selectedLocation.title.replace(" ", "+") + '&mode=transit&alternatives=true'
+
+
+        const res = await fetch(url, {
+            method: 'GET'
         })
+            .then((response) => response.json())
+            .then((responseJson) => {
+
+                console.log(
+                    responseJson
+                )
+
+                console.log(responseJson.results[0].geometry.location)
+                var updatedVal = {
+                    latitude: responseJson.results[0].geometry.location.lat,
+                    longitude: responseJson.results[0].geometry.location.lng,
+                }
+
+                console.log(updatedVal)
+
+                this.setState({
+                    destination: updatedVal,
+                })
+
+            })
+
+
+
 
     }
 
@@ -76,13 +108,12 @@ class MainActivity extends React.Component {
                 console.log("granted");
                 const location = await Location.getCurrentPositionAsync({
                     enableHighAccuracy: true
-                });
-                // console.log(location);
+                })
                 this.setState({ location: location.coords });
             } else {
                 this.setState({
                     errorMessage: "Permission to access Location denied"
-                });
+                })
             }
         } catch (e) {
             console.log("Error for permissions: ", e);
@@ -91,6 +122,8 @@ class MainActivity extends React.Component {
 
 
     render() {
+
+
         return (
             <View style={{ width: "100%", height: "100%" }}>
                 <Autocomplete
@@ -124,9 +157,12 @@ class MainActivity extends React.Component {
                     ></MapViewDirections>
                 </MapView>
                 <TouchableOpacity
-                    style ={styles.startButton}
-                    onPress={() => { this.props.navigation.navigate("ETicketActivity") }} >
-                    <Text style = {{color: 'white', fontWeight: 'bold'}}> Start Journey </Text>
+                    style={styles.startButton}
+                    onPress={() => { this.props.navigation.navigate("ETicketActivity", {
+                        origin: this.state.origin,
+                        destination: this.state.destination,
+                    }) }} >
+                    <Text style={{ color: 'white', fontWeight: 'bold' }}> Start Journey </Text>
                 </TouchableOpacity>
             </View>
         )
@@ -135,22 +171,22 @@ class MainActivity extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-      borderRadius: 4,
-      borderWidth: 0.5,
-      borderColor: '#d6d7da',
+        borderRadius: 4,
+        borderWidth: 0.5,
+        borderColor: '#d6d7da',
     },
     startButton: {
-    alignItems: 'center',
-    backgroundColor: '#189adb',
-    padding: 10,
-    margin: 10,
-    borderRadius: 20,
-    elevation: 2,
+        alignItems: 'center',
+        backgroundColor: '#189adb',
+        padding: 10,
+        margin: 10,
+        borderRadius: 20,
+        elevation: 2,
     },
     title: {
-      fontSize: 19,
-      fontWeight: 'bold',
+        fontSize: 19,
+        fontWeight: 'bold',
     }
-  });
+});
 
 export default MainActivity;

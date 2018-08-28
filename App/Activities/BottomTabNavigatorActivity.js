@@ -29,22 +29,7 @@ const NavBar = createDrawerNavigator({
             />,
         }),
     }),
-    PastCommutes: createStackNavigator({
-        PastCommutesList: {
-            screen: PastCommutesActivity,
-            navigationOptions: {
-                header: null,
-
-            },
-        },
-        PastCommutesMap: {
-            screen: PastCommutesMapActivity,
-            navigationOptions: {
-                header: null,
-            },
-        }
-
-    }),
+    
     Settings: {
         screen: SettingsActivity,
     },
@@ -53,6 +38,22 @@ const NavBar = createDrawerNavigator({
 
 })
 
+// PastCommutes: createStackNavigator({
+//     PastCommutesList: {
+//         screen: PastCommutesActivity,
+//         navigationOptions: {
+//             header: null,
+
+//         },
+//     },
+//     PastCommutesMap: {
+//         screen: PastCommutesMapActivity,
+//         navigationOptions: {
+//             header: null,
+//         },
+//     }
+
+// })
 export default class TabClass extends React.Component {
     static navigationOptions = {
         headerLeft: null,
