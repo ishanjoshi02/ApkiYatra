@@ -2,6 +2,7 @@ import Autocomplete from "react-native-autocomplete-input";
 import React, { Component } from "react";
 import GoogleDirectionsAPIKey from "../API_KEYS/keys";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#F5FCFF",
