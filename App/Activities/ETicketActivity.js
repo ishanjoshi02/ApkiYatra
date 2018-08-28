@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Icon } from "react-native-elements";
-import { StyleSheet, TouchableOpacity, View, Text, ScrollView, BackHandler, Button } from "react-native";
+import { StyleSheet, TouchableOpacity, View, Text, ScrollView,} from "react-native";
 import GoogleDirectionsAPIKey from '../API_KEYS/keys'
 class ETicketActivity extends React.Component {
 
