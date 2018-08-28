@@ -19,3 +19,4 @@ yarn-error.log*
 utils/constants.js
 node_modules
 API_KEYS/keys.js
+API_KEYS/payment_keys.js
