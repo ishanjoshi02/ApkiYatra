@@ -6,7 +6,23 @@ import { Marker } from "react-native-maps";
 import MapViewDirections from 'react-native-maps-directions';
 import GoogleDirectionsAPIKey from "../API_KEYS/keys";
 import Autocomplete from "./AutoComplete";
-import { Geocoder } from 'react-native-geocoder'
+
+let request = (lat, lng) =>
+    new Promise((resolve, reject) => {
+        fetch("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&sensor=true&key=AIzaSyA_40v57dPXz9vVAXZjq_1usAB0J53nq44", {
+            headers: {
+                "Cache-Control": "no-cache",
+                "Postman-Token": "0adb2580-32e5-4ba8-9676-cfdce73db677"
+            }
+        })
+            .then(request => request.json())
+            .catch(e => reject(e))
+            .then(data => {
+                console.log(data)
+                resolve(data)
+            })
+    })
+
 
 
 class MainActivity extends React.Component {
@@ -39,8 +55,8 @@ class MainActivity extends React.Component {
                 place_id: null,
             }
         };
-
     }
+
 
     static navigationOptions = {
         header: null,
@@ -53,6 +69,13 @@ class MainActivity extends React.Component {
 
     handleLocationSelect = async (selectedLocation) => {
 
+        this.setState({
+            destinationMeta: {
+                name: selectedLocation.title,
+                place_id: selectedLocation.place_id
+            }
+        })
+        console.log(selectedLocation)
         const url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + selectedLocation.title + '&key=' + GoogleDirectionsAPIKey;
 
         const u = 'https://maps.googleapis.com/maps/api/directions/json?origin=mit+college+of+engineering+kothrud&destination=' + selectedLocation.title.replace(" ", "+") + '&mode=transit&alternatives=true'
@@ -110,6 +133,20 @@ class MainActivity extends React.Component {
                     enableHighAccuracy: true
                 })
                 this.setState({ location: location.coords });
+                const url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + location.coords.latitude +
+                    "," + location.coords.longitude + "&sensor=true&key=AIzaSyA_40v57dPXz9vVAXZjq_1usAB0J53nq44";
+
+                const res = await request(location.coords.latitude, location.coords.longitude)
+                console.log("HELLLLOOOOO\n")
+                console.dir(res)
+                this.setState({
+                    originMeta: {
+                        name: res.results[0].address_components[0].short_name,
+                        place_id: res.results[0].place_id,
+                    }
+                })
+                console.log(this.state.originMeta)
+
             } else {
                 this.setState({
                     errorMessage: "Permission to access Location denied"
@@ -158,10 +195,12 @@ class MainActivity extends React.Component {
                 </MapView>
                 <TouchableOpacity
                     style={styles.startButton}
-                    onPress={() => { this.props.navigation.navigate("ETicketActivity", {
-                        origin: this.state.origin,
-                        destination: this.state.destination,
-                    }) }} >
+                    onPress={() => {
+                        this.props.navigation.navigate("ETicketActivity", {
+                            origin: this.state.originMeta,
+                            destination: this.state.destinationMeta,
+                        })
+                    }} >
                     <Text style={{ color: 'white', fontWeight: 'bold' }}> Start Journey </Text>
                 </TouchableOpacity>
             </View>

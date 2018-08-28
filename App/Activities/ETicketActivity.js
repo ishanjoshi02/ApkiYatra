@@ -10,7 +10,6 @@ import {
   Button
 } from "react-native";
 import GoogleDirectionsAPIKey from "../API_KEYS/keys";
-
 const query = ({ source, destination }) =>
   new Promise((resolve, reject) => {
     fetch(
@@ -38,15 +37,10 @@ class ETicketActivity extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: null,
-      loaded: false
-    };
-    this.data = {
       fare: 200,
-      startPoint: "MIT College of Engineering",
-      endPoint: "Ojas Apartments",
       midPoints: [
         {
+          id: 1,
           stop: "Point 1",
           mode: "Bus",
           ticketFare: 5,
@@ -54,6 +48,7 @@ class ETicketActivity extends React.Component {
           endTime: "8:13 am"
         },
         {
+          id: 2,
           stop: "Point 2",
           mode: "Train",
           ticketFare: 15,
@@ -61,6 +56,7 @@ class ETicketActivity extends React.Component {
           endTime: "8:50 am"
         },
         {
+          id: 3,
           stop: "Point 3",
           mode: "Walking",
           ticketFare: 0,
@@ -70,18 +66,7 @@ class ETicketActivity extends React.Component {
       ]
     };
 
-    console.log(this.props.navigation.getParam("origin", "null"));
-
-    console.log(this.props.navigation.getParam("destination", "null"));
-  }
-
-  componentDidMount() {
-    query({
-      source: "pune",
-      destination: "mumbai"
-    }).then(r => {
-      console.log(r.routes[0].legs);
-    });
+    console.log(this.props.navigation.getParam("originMeta", "null"));
   }
 
   static navigationOptions = {
@@ -91,39 +76,40 @@ class ETicketActivity extends React.Component {
     tabBarIcon: <Icon name="google-maps" type="material-community" />
   };
 
-  addIconsToData = () => {
-    var midPoints = this.data.midPoints;
-    for (var i = 0; i < midPoints.length; i += 1) {
-      var icon = null;
-      var type = null;
-      switch (midPoints[i].mode) {
-        case "Bus":
-          icon = "bus";
-          type = "material-community";
-          break;
-        case "Train":
-          icon = "train";
-          type = "material-community";
-          break;
-        case "Walking":
-          icon = "md-walk";
-          type = "ionicon";
-        default:
-          break;
-      }
+  // addIconsToData = () => {
+  //     var midPoints = this.state.midPoints;
+  //     var temp = []
+  //     for (var i = 0; i < midPoints.length; i += 1) {
+  //         var icon = null
+  //         var type = null
+  //         switch (midPoints[i].mode) {
+  //             case "Bus":
+  //                 icon = 'bus'
+  //                 type = 'material-community'
+  //                 break;
+  //             case "Train":
+  //                 icon = 'train'
+  //                 type = 'material-community'
+  //                 break;
+  //             case "Walking":
+  //                 icon = 'md-walk'
+  //                 type = 'ionicon'
+  //             default:
+  //                 break;
+  //         }
 
-      midPoints[i].icon = icon;
-      midPoints[i].iconType = type;
-      midPoints[i].id = i;
-    }
+  //         temp.push({
+  //             icon: icon,
+  //             iconType: type,
+  //             id: i,
+  //         })
+  //     }
+  //     return temp
 
-    this.data.midPoints = midPoints;
-  };
+  // }
 
   render() {
-    var commuteDetailsText = this.data.startPoint + " -> " + this.data.endPoint;
-    this.addIconsToData();
-
+    var midPoints = this.state.midPoints;
     return (
       <View style={{ flex: 1 }}>
         <TouchableOpacity
@@ -142,7 +128,7 @@ class ETicketActivity extends React.Component {
                 <Text
                   style={{ textAlignVertical: "center", textAlign: "center" }}
                 >
-                  {this.data.startPoint}
+                  {this.props.navigation.getParam("origin", null).name}
                 </Text>
               </View>
               <Icon name="arrow-long-right" type="entypo" />
@@ -150,15 +136,14 @@ class ETicketActivity extends React.Component {
                 <Text
                   style={{ textAlignVertical: "center", textAlign: "center" }}
                 >
-                  {this.data.endPoint}
+                  {this.props.navigation.getParam("destination", null).name}
                 </Text>
               </View>
             </View>
           </View>
 
-          {this.data.midPoints.map(item => (
+          {midPoints.map(item => (
             <Card key={item.id} title={item.mode}>
-              <Icon name={item.icon} type={item.iconType} />
               <Text>Station : {item.stop}</Text>
               <Text>Fare : {item.ticketFare}</Text>
             </Card>
