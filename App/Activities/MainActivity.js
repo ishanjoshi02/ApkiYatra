@@ -6,6 +6,7 @@ import { Marker } from "react-native-maps";
 import MapViewDirections from 'react-native-maps-directions';
 import GoogleDirectionsAPIKey from "../API_KEYS/keys";
 import Autocomplete from "./AutoComplete";
+import { Geocoder } from 'react-native-geocoder'
 
 export default class MainActivity extends React.Component {
     constructor(props) {
@@ -41,6 +42,19 @@ export default class MainActivity extends React.Component {
         />,
     };
 
+    handleLocationSelect = async (selectedLocation) => {
+
+        const url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + selectedLocation.title + '&key=' + GoogleDirectionsAPIKey;
+        const res = await fetch(url)
+        
+        console.log("Result: " + res.json())
+        console.log(res.geometry.location)
+        this.setState({
+            destination:  res.geometry.location
+        })
+
+    }
+
     componentWillMount() {
         if (!Constants.isDevice) {
             this.setState({
@@ -63,7 +77,7 @@ export default class MainActivity extends React.Component {
                 const location = await Location.getCurrentPositionAsync({
                     enableHighAccuracy: true
                 });
-                console.log(location);
+                // console.log(location);
                 this.setState({ location: location.coords });
             } else {
                 this.setState({
@@ -75,17 +89,13 @@ export default class MainActivity extends React.Component {
         }
     };
 
-    _filterData = query => {
-        console.log(query);
-    };
 
     render() {
-        const { query } = this.state;
-        const data = this._filterData(query);
-
         return (
             <View style={{ width: "100%", height: "100%" }}>
-                <Autocomplete />
+                <Autocomplete
+                    handleLocationSelect={this.handleLocationSelect}
+                />
                 <MapView
                     style={{ flex: 1, }}
                     initialRegion={{
