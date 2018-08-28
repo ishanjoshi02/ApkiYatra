@@ -2,8 +2,6 @@ import { createDrawerNavigator, createStackNavigator } from "react-navigation";
 import MainActivity from "./MainActivity";
 import SettingsActivity from "./SettingsActivity";
 import ETicketActivity from './ETicketActivity'
-import PastCommutesActivity from "./PastCommutes";
-import PastCommutesMapActivity from './PastCommuteMap'
 import React from "react";
 import { Icon, Header } from "react-native-elements";
 
