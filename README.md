@@ -16,4 +16,4 @@ The `.apk` file is uploaded in the `Releases` section.]
 
 # Youtube Demo Link
 
-[Demo link](https://github.com/ishanjoshi02/ApkiYatra/releases/download/1.0.0/apkiyatra-091e9b3b3cd0f610117d2a9d78dd1b86-signed.apk)
+[Demo link](https://youtu.be/rK72UaALDGA)
