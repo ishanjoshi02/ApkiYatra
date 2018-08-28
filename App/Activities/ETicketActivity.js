@@ -2,6 +2,31 @@ import React from "react";
 import { Card, Icon } from "react-native-elements";
 import { StyleSheet, TouchableOpacity, View, Text, ScrollView, } from "react-native";
 import GoogleDirectionsAPIKey from '../API_KEYS/keys'
+
+const query = ({ source, destination }) =>
+    new Promise((resolve, reject) => {
+        fetch(
+            "https://wt-ae86fc1e6fb911ae3bcdae6a5250020b-0.sandbox.auth0-extend.com/test",
+            {
+                body: '{\n\t"source":"' + source + '",\n\t"destination":"' + destination + '"\n}',
+                headers: {
+                    "Cache-Control": "no-cache",
+                    "Content-Type": "application/json",
+                    "Postman-Token": "c0c4ae73-24b6-7387-c337-7560fbbce9d6"
+                },
+                method: "POST"
+            }
+        )
+            .then(request => request.json())
+            .catch(e => reject(e))
+            .then(data => {
+                resolve(data);
+            })
+            .catch(error => {
+                reject(error);
+            });
+    });
+
 class ETicketActivity extends React.Component {
     constructor(props) {
         super(props);
@@ -36,6 +61,23 @@ class ETicketActivity extends React.Component {
         };
 
         console.log(this.props.navigation.getParam("originMeta", "null"));
+
+
+
+    }
+
+
+    componentWillMount() {
+
+        let source = this.props.navigation.getParam('origin', null).name
+        let dest =  this.props.navigation.getParam('destination', null).name
+
+        
+
+        const res = await query(source, dest)
+        console.log("Query return")
+        console.dir(res)
+
     }
 
     static navigationOptions = {
