@@ -208,6 +208,7 @@ class ETicketActivity extends React.Component {
 
         <TouchableOpacity style={styles.payButton} onPress={this.makepayment}>
           <Text> Rs. 100 PAY </Text>
+          
         </TouchableOpacity>
       </View>
     );
