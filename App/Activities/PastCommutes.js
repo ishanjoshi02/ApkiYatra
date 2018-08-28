@@ -33,7 +33,7 @@ export default class PastCommutesActivity extends React.Component {
             let url = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + lng + "&sensor=true"
             let response = await fetch(url)
             let responseJson = await response.json()
-            console.log(responseJson.results[0].formatted_address)
+            console.dir(responseJson.results[0].formatted_address)
             return responseJson.results[0].formatted_address;
         } catch (e) {
             console.error(e)
