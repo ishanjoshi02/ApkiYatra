@@ -1,6 +1,6 @@
 import Autocomplete from "react-native-autocomplete-input";
 import React, { Component } from "react";
-import GoogleDirectionsAPIKey from '../API_KEYS/keys'
+import GoogleDirectionsAPIKey from "../API_KEYS/keys";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 const styles = StyleSheet.create({
   container: {
@@ -15,11 +15,11 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
     zIndex: 1,
-    margin: 10    
+    margin: 10
   },
   itemText: {
     fontSize: 15,
-    margin: 2,
+    margin: 2
   },
   descriptionContainer: {
     // `backgroundColor` needs to be set otherwise the
@@ -52,7 +52,8 @@ const ROMAN = ["", "I", "II", "III", "IV", "V", "VI", "VII"];
 const locationsRequest = text =>
   new Promise((resolve, reject) => {
     fetch(
-      `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${text}&types=geocode&language=fr&key=` + GoogleDirectionsAPIKey
+      `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${text}&types=geocode&language=fr&key=` +
+        GoogleDirectionsAPIKey
     )
       .then(request => request.json())
       .catch(e => reject(e))
