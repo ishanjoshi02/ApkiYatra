@@ -13,11 +13,12 @@ const styles = StyleSheet.create({
     position: "absolute",
     right: 0,
     top: 0,
-    zIndex: 1
+    zIndex: 1,
+    margin: 10    
   },
   itemText: {
     fontSize: 15,
-    margin: 2
+    margin: 2,
   },
   descriptionContainer: {
     // `backgroundColor` needs to be set otherwise the

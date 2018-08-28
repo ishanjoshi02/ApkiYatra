@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Button, } from "react-native";
+import { View, Button, StyleSheet,Text, TouchableOpacity } from "react-native";
 import { Icon } from "react-native-elements";
 import { MapView, Constants, Location, Permissions } from "expo";
 import { Marker } from "react-native-maps";
@@ -8,7 +8,7 @@ import GoogleDirectionsAPIKey from "../API_KEYS/keys";
 import Autocomplete from "./AutoComplete";
 import { Geocoder } from 'react-native-geocoder'
 
-export default class MainActivity extends React.Component {
+class MainActivity extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -123,8 +123,34 @@ export default class MainActivity extends React.Component {
                         apikey={GoogleDirectionsAPIKey}
                     ></MapViewDirections>
                 </MapView>
-                <Button title="Let's go" onPress={() => { this.props.navigation.navigate("ETicketActivity") }}></Button>
+                <TouchableOpacity
+                    style ={styles.startButton}
+                    onPress={() => { this.props.navigation.navigate("ETicketActivity") }} >
+                    <Text style = {{color: 'white', fontWeight: 'bold'}}> Start Journey </Text>
+                </TouchableOpacity>
             </View>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+      borderRadius: 4,
+      borderWidth: 0.5,
+      borderColor: '#d6d7da',
+    },
+    startButton: {
+    alignItems: 'center',
+    backgroundColor: '#189adb',
+    padding: 10,
+    margin: 10,
+    borderRadius: 20,
+    elevation: 2,
+    },
+    title: {
+      fontSize: 19,
+      fontWeight: 'bold',
+    }
+  });
+
+export default MainActivity;
