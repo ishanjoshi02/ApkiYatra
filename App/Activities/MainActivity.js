@@ -3,10 +3,9 @@ import { View, Button, StyleSheet,Text, TouchableOpacity } from "react-native";
 import { Icon } from "react-native-elements";
 import { MapView, Constants, Location, Permissions } from "expo";
 import { Marker } from "react-native-maps";
-import { createStackNavigator } from "react-navigation";
-import ETicketActivity from "./ETicketActivity";
+import MapViewDirections from 'react-native-maps-directions';
+import GoogleDirectionsAPIKey from "../API_KEYS/keys";
 import Autocomplete from "./AutoComplete";
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 
 class MainActivity extends React.Component {
     constructor(props) {
@@ -17,8 +16,20 @@ class MainActivity extends React.Component {
                 longitude: 73.815387
             },
             errorMessage: null,
-            query: null
+            query: null,
+            origin: {
+                latitude: 18.506765,
+                longitude: 73.815387
+            },
+
+            destination: {
+                latitude: 18.481768,
+                longitude: 73.807372
+            }
         };
+
+        console.log(GoogleDirectionsAPIKey)
+
     }
 
     static navigationOptions = {
@@ -86,9 +97,21 @@ class MainActivity extends React.Component {
                     onMapReady={e => console.log('ready')}
                 >
                     <Marker
-                        coordinate={this.state.location}
-                        title="Your current location"
+                        coordinate={this.state.origin}
+                        title="Source"
                     />
+
+                    <Marker
+                        coordinate={this.state.destination}
+                        title="Destination"
+                    />
+
+                    <MapViewDirections
+                        origin={this.state.origin}
+                        destination={this.state.destination}
+                        strokeWidth={3}
+                        apikey={GoogleDirectionsAPIKey}
+                    ></MapViewDirections>
                 </MapView>
                 <TouchableOpacity
                     style ={styles.startButton}
